@@ -37,3 +37,10 @@ Autres liens :
 ## Musique
 
 La musique de fond a été empruntée au jeu Infotron sur Mac.
+
+https://www.macintoshrepository.org/2851-infotron
+
+## UI
+
+* https://www.kenney.nl/assets/ui-pack-space-expansion
+* https://opengameart.org/content/ui-and-item-sounds-sample-1
