@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Europe</title>
+        <meta charset="utf8"/>
+        <link rel="stylesheet" type="text/css" href="/build/app.css"/>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    </head>
+    <body>
+    
+        <main></main>
+    
+        <script src="/build/runtime.js"></script>
+        <script src="/build/app.js"></script>
+
+    <!--
+        <svg id="ref"></svg>
+        <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+        <script>
+            let svg = document.getElementById('ref');
+            rc = rough.svg(svg);
+
+            
+            let panel = document.querySelector('.metal-panel');
+
+            function mytest() {
+                let w = 200;
+                let h = 200;
+                let g = rc.rectangle(10, 10, w, h, { roughness: 2.8, fill: 'red', fillStyle: 'solid' });
+                // let url = 'url(data:image/svg+xml;base64,' + btoa('<svg>' + g.innerHTML + '</svg>') + ')';
+                let url = 'url(data:image/svg+xml,' + encodeURIComponent('<svg width="' + (w + 20) + '" height="' + (h + 20) + '" xmlns="http://www.w3.org/2000/svg">' + g.innerHTML + '</svg>') + ')';
+                panel.style.setProperty('--border-src', url);
+
+                console.log(url);
+            }
+        </script>
+    -->    
+    </body>
+</html>

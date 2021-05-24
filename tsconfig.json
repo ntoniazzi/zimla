@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "strictNullChecks": false,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "dom",
+            "es2020"
+        ],
+        "outDir": "tsc",
+        "declarationDir": "types",
+        // "module": "es2020",
+        "moduleResolution": "node",
+        "sourceMap": false,
+        // "target": "es2020",
+        "baseUrl": "./",
+        "paths": {
+            "libcss/*": ["node_modules/lib-css/*"],
+            "scss/*": ["src/assets/scss/*"]
+        },
+        "resolveJsonModule": true
+    },
+    "include": [
+        "src/**/*.ts", "index.ts", "src/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/**/*.spec.ts",
+        "src/**/__tests__/*.ts"
+    ],
+    "compileOnSave": false,
+    "atom": {
+        "rewriteTsconfig": false
+    }
+}

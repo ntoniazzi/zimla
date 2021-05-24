@@ -1,0 +1,20 @@
+[
+    {
+        "alpha2": "XK",
+        "countryLabel": "Kosovo",
+        "population": 1920079,
+        "superficie": 10908,
+        "surface_en_eau": null,
+        "capitaleLabel": "Pristina",
+        "flag": "http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20Kosovo.svg"
+    },
+    {
+        "alpha2": "PS",
+        "countryLabel": "Palestine",
+        "population": 5090293,
+        "superficie": 6020,
+        "surface_en_eau": null,
+        "capitaleLabel": "Ramallah",
+        "flag": "http://commons.wikimedia.org/wiki/Special:FilePath/Flag%20of%20Palestine.svg"
+    }
+]

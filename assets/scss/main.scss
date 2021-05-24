@@ -1,0 +1,533 @@
+@import "./panel";
+
+@font-face {
+    font-family: "Nimbus Sans L";
+    src: local("Nimbus Sans L"),
+        url("../fonts/NimbusSanL-Reg.otf") format("otf");
+}
+
+@font-face {
+    font-family: "Nimbus Sans L";
+    font-weight: bold;
+    src: local("Nimbus Sans L Bold") url("../fonts/NimbusSanL-Bol.otf");
+}
+
+@font-face {
+    font-family: "Future Earth";
+    src: url("../fonts/Future Earth v2.ttf");
+}
+
+/*
+@font-face {
+    font-family: "KV Future";
+    src: url("../fonts/kenvector_future.ttf");
+}
+
+@font-face {
+    font-family: "KV Future Thin";
+    src: url("../fonts/kenvector_future_thin.ttf");
+}
+*/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Nimbus Sans L, sans-serif;
+    background: #327db3;
+    cursor: url(../svg/cursor-3d-shadow.svg) 4 4, default;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.flag {
+    // font-size: 20rem;
+    // line-height: 0.8em;
+    // transform: translate(0, 1rem);
+    text-align: center;
+}
+
+.flag > img {
+    max-width: 60%;
+    margin: 2rem;
+}
+
+button {
+	font-family: Future Earth;
+	appearance: none;
+	background: none;
+	border: 2px outset gray;
+	border-radius: 6px;
+	padding: 0.25em 2em;
+
+    cursor: url(../svg/cursor-hand.svg) 2 2, pointer;
+}
+
+input, label {
+    cursor: url(../svg/cursor-hand.svg) 2 2, pointer;
+}
+
+header {
+    font-family: Future Earth, sans-serif;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;   
+    height: 4rem;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    background-image: url(../svg/dot-red.svg);
+    background-repeat: no-repeat;
+    background-position:  50% 50%;
+    background-size: contain;
+
+    &:checked {
+        background-image: url(../svg/dot-green.svg);
+    }
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    background-image: url(../svg/dot-white.svg);
+    background-repeat: no-repeat;
+    background-position:  50% 50%;
+    background-size: contain;
+
+    &:checked {
+        background-image: url(../svg/dot-blue.svg);
+    }
+}
+
+fieldset {
+    margin: 0 0 1rem 0;
+
+    legend {
+        font-family: Future Earth;
+        color: gray;
+    }
+}
+
+.music {
+	font-size: 8pt;
+	text-shadow: none;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5em;
+
+        & :nth-child(1) {
+          flex-grow: 1;  
+        }
+
+        & :nth-child(2) {
+            width: 2em;
+        }
+
+        & :nth-child(3) {
+            width: 8em;
+        }
+
+        & :nth-child(4) {
+            width: 4em;
+            text-align: right;
+        }
+    }
+}
+
+.cards {
+	height: calc(100vh - 5rem);
+}
+
+#screen-1 {
+    max-width: 90vw;
+    margin: 0 auto;
+
+    .metal-panel {
+        display: inline-block;
+    }
+}
+
+#screen-play {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    height: 100%;
+
+    #map-box {
+        width: calc(100% - 20rem);
+    }
+
+    .panels > * {
+        margin-bottom: 1rem;
+        width: 19.5rem;
+    }
+}
+
+#screen-options {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+
+    &::before {
+        content: "";
+        display: block;
+        flex-grow: 1;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        flex-grow: 2;
+    }
+
+    .metal-panel {
+        width: 32rem;
+    }
+}
+
+#screen-score {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+
+    &::before {
+        content: "";
+        display: block;
+        flex-grow: 1;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        flex-grow: 2;
+    }
+
+    .glass-panel {
+        width: 32rem;
+        padding: 1rem;
+    }
+}
+
+#commands {
+    width: 25em;
+    margin-left: 1rem;
+    transition: all 200ms ease;
+
+    .metal-panel {
+        margin-bottom: 1rem;
+    }
+
+    .player {
+        margin-bottom: 1rem;
+        grid-template-columns: auto 5rem;
+        padding: 0 0 7px 7px;
+        width: auto;
+        position: relative;
+        height: 6rem;
+
+        .name {
+            align-self: end;
+            grid-column-start: 1;
+            grid-column-end: 1;
+        }
+
+        .last {
+            align-self: start;
+            grid-column-start: 1;
+            grid-column-end: 1;
+        }
+
+        img {
+            position: absolute;
+            top: -5rem;
+            right: -3rem;
+            height: 8rem;
+            transform: none;
+            max-width: unset;
+            max-height: unset;
+            grid-column: unset;
+            grid-row: unset;
+        }
+    }
+}
+
+#map-box {
+    overflow: hidden;
+    padding: 12px;
+    transition: all 200ms ease;
+    position: relative;
+}
+
+#map {
+    height: calc(100% - 36px);
+    width: 100%;
+    overflow: auto;
+    scrollbar-color: rgb(100, 100, 100) transparent;
+    scrollbar-width: thin;
+
+    svg {
+        cursor: url(../svg/cursor-bk.svg) 15 15, pointer;
+        transform-origin: 0 0;
+    }
+}
+
+#zoom {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: inline-block;
+
+    > button {
+        font-size: 65%;
+    }
+}
+
+/* SVG */
+/*
+#states path {
+    transition: all 200ms ease;
+    cursor: pointer;
+}
+*/
+
+dt {
+    font-weight: bold;
+    display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+dd {
+    display: inline-block;
+    margin-left: 0;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.game {
+    font-family: Future Earth;
+    line-height: 1.6em;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.35rem;
+
+    &::before {
+        content: "";
+    
+        height: 1.5em;
+        width: 1.5em;
+        background: url(../svg/dot-white.svg) no-repeat;
+        margin-right: 0.25em;
+    }
+
+    .label {
+        flex-grow: 1;
+    }
+
+    &.success {
+        &::before {
+            background-image: url(../svg/dot-green.svg);
+        }
+    }
+
+    &.failure {
+        .label, .score {
+            opacity: 0.5;
+        }
+
+        &::before {
+            background-image: url(../svg/dot-red.svg);
+        }
+    }
+}
+
+span.game {
+    display: inline-block;
+
+    &::before {
+        display: block;
+    }
+}
+
+svg#Europe {
+    #states path {
+        fill: #fefee9;
+    }
+
+    #states path:hover {
+        fill: #fdf4b4 !important;
+    }
+
+    #rivers,
+    #coastline,
+    #Lakes,
+    #city_names,
+    #cities,
+    #country_names,
+    #Borders {
+        pointer-events: none;
+    }
+}
+
+#map.dragging svg #states {
+    pointer-events: none;
+}
+
+.question {
+    font-size: 2rem;
+    font-family: Nimbus Sans L, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+}
+
+.glass-panel {
+    .head {
+        border-bottom: 1px solid;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+
+        font-size: 1.4rem;
+        font-family: Future Earth;
+
+        & :last-child {
+            text-shadow: 0 0 8px #ff8300;
+            color: #000;
+        }
+    }
+
+    .foot {
+        border-top: 1px solid;
+        margin-top: 1rem;
+        padding-top: 0.5rem;
+    }
+}
+
+.players {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+    // width: calc(50% - 0.5rem);
+    gap: 1rem;
+}
+
+.player {
+    display: grid;
+    grid-template-columns: 6em auto;
+    width: calc(50% - 0.5rem);
+    cursor: url(../svg/cursor-hand.svg) 2 2, pointer;
+
+    .name {
+        font-family: Future Earth;
+        font-size: 1.5em;
+        z-index: 1;
+        align-self: end;
+    }
+
+    .last {
+        font-size: 0.6em;
+    }
+
+    img {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        transform: scale(1.5);
+        width: 5em;
+        height: 5em;
+    }
+
+    .score {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 3;
+        font-family: Future Earth;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .last {
+        font-family: Future Earth;
+        font-size: 8pt;
+        color: white;
+    }
+}
+
+.players .player {
+    font-size: 1.8vw;
+}
+
+header .player-menu {
+	font-size: 12pt;
+	z-index: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	height: 100%;
+	gap: 2rem;
+
+    img {
+        max-height: 100%;
+        transform: translateX(-0.5rem) scale(2);
+    }
+
+    .name {
+        text-align: right;
+        flex-grow: 1;
+    }
+}
+
+#name-selector > .glass-panel {
+    margin: 0 1rem;
+}
+
+.well.has-input {
+    display: inline-block;
+
+    input {
+        appearance: none;
+        border: none;
+        padding: 0 0 0 0.25rem;
+        margin: -5px;
+        line-height: 2rem;
+        background: none;
+        border-radius: 4px;
+        outline: none;
+        font-family: Future Earth;
+        width: 25em;
+        color: #666;
+
+        &:focus {
+            color: #000;
+        }
+    }
+}
+
+#screen-play .counter-container {
+	display: block;
+	font-family: Future Earth;
+	line-height: 3em;
+	text-align: center;
+}

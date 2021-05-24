@@ -1,0 +1,159 @@
+.metal-panel {
+    padding: 12px;
+    position: relative;
+
+    &::before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        border-image-source: url("../svg/metal-panel.svg");
+        border-width: 12px;
+        border-style: solid;
+        border-image-slice: 12 fill;
+        border-radius: 8px;
+        border-color: #d6dde7; // fallback
+        background-color: #d6dde7; // fallback
+    }
+
+    & > .label {
+        position: relative;
+        display: table-cell;
+        padding: 0.5rem 1.5rem 0.5rem 1rem;
+        top: -12px;
+        left: -12px;
+        font-size: 0.6rem;
+        color: white;
+        font-family: Future Earth, sans-serif;
+    }
+
+    &.corner > .label::before {
+        content: "";
+        border-width: 8px 12px 1px 8px;
+        border-style: solid;
+        border-image-slice: 8 14 2 8 fill;
+        border-radius: 8px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: -1;
+    }
+}
+
+.metal-panel.corner.red > .label::before {
+    border-image-source: url("../svg/red-corner.svg");
+    background-color: #e86a17;
+    border-color: #e86a17;
+}
+
+.metal-panel.corner.blue > .label::before {
+    border-image-source: url("../svg/blue-corner.svg");
+    background-color: #1ea7e1;
+    border-color: #1ea7e1;
+}
+
+.metal-panel.corner.yellow > .label::before {
+    border-image-source: url("../svg/yellow-corner.svg");
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+}
+
+.metal-panel.corner.green > .label::before {
+    border-image-source: url("../svg/green-corner.svg");
+    background-color: #73cd4b;
+    border-color: #73cd4b;
+}
+
+.well {
+    position: relative;
+    padding: 8px;
+}
+
+.well::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-image-source: url("../svg/well.svg");
+    border-width: 8px;
+    border-style: solid;
+    border-radius: 8px;
+    border-image-slice: 8 fill;
+    border-color: #c9d0d9; // fallback
+    background-color: #c9d0d9; // fallback
+    z-index: -1;
+}
+
+.glass-panel {
+    position: relative;
+    padding: 7px;
+    
+    &::before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        border-image-source: url("../svg/glass-panel-corner-tr.svg");
+        border-width: 14px 14px 7px 7px;
+        border-style: solid;
+        border-image-slice: 14 14 7 7 fill;
+        border-radius: 10px 20px 10px 10px;
+    }
+
+    & > .label {
+        font-family: Future Earth, sans-serif;
+        margin: 0 0 1em;
+        border-bottom: 1px solid;
+        padding-bottom: 0.5rem;
+        font-size: 1.5rem;
+    }
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-height: 98vh;
+
+    &::before {
+        content: "";
+        display: block;
+        flex-grow: 1;
+    }
+
+    &::after {
+        content: "";
+        display: block;
+        flex-grow: 2;
+    }
+
+    .modal {
+        display: flex;
+        flex-direction: column;
+        max-height: 96vh;
+
+        .body {
+            overflow-y: auto;
+            padding-right: 1.5rem;
+        }
+    }
+}

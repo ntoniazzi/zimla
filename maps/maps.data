@@ -1,0 +1,7 @@
+[
+    {
+        "name": "Europe",
+        "smallCountries": ["li", "ad", "sm", "mt", "mc"],
+        "map": "build/maps/europe-plain.svg"
+    }
+]
