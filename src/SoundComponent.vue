@@ -34,8 +34,7 @@
     import { Component, Watch } from "vue-property-decorator";
     import soundConfig from ".webpack[javascript/auto]!=!../howler-loader.js!../assets/sounds/output.json";
 
-
-    const STORAGE_KEY = 'sound-settings';
+    const STORAGE_KEY = "sound-settings";
 
     class MusicOptions {
         musicVolume: number = 1.0;
@@ -100,7 +99,7 @@
         }
 
         private trySound() {
-            this.play('right');
+            this.play("right");
         }
 
         private created() {
@@ -118,13 +117,16 @@
                 }
 
                 saveTimeout = setTimeout(this.save, 500);
-            }
+            };
 
             this.sound = new Howl(<any>soundConfig);
             this.sound.on("end", (id) => {
                 if (id === this.musicIntroId) {
                     this.musicLoopId = this.sound.play("music-loop");
-                    this.sound.volume(this.options.musicVolume, this.musicLoopId);
+                    this.sound.volume(
+                        this.options.musicVolume,
+                        this.musicLoopId
+                    );
                 }
             });
             this.sound.once("load", () => {
@@ -132,8 +134,7 @@
             });
         }
 
-        private playIntro()
-        {
+        private playIntro() {
             if (!this.options.music) {
                 return;
             }
@@ -152,7 +153,7 @@
                 return;
             }
 
-            this.play('right');
+            this.play("right");
         }
 
         public playWrong() {
@@ -160,7 +161,7 @@
                 return;
             }
 
-            this.play('wrong');
+            this.play("wrong");
         }
 
         public playDie() {
@@ -168,7 +169,7 @@
                 return;
             }
 
-            this.play('die');
+            this.play("die");
         }
 
         private play(sprite: string) {

@@ -27,7 +27,7 @@
     import { Prop, Watch } from "vue-property-decorator";
     import { Dictionary } from "./Dictionary";
     import { CountryShape, MapData } from "./interfaces";
-    const panzoom = require('panzoom');
+    const panzoom = require("panzoom");
 
     const blackList: Array<string> = ["az", "iq", "sa", "ir", "kz"];
 
@@ -72,9 +72,14 @@
                         this.container = <HTMLDivElement>this.$refs["map"];
                         this.svg = <SVGElement>this.container.firstElementChild;
 
-                        let pan = panzoom(<SVGElement> this.svg);
-                        pan.on('panstart', () => {
-                            this.inhibitClick = true;
+                        let pan = panzoom(<SVGElement>this.svg, {
+                            maxZoom: 2.4,
+                            minZoom: 0.4,
+                            smoothScroll: false,
+                            bounds: true,
+                            boundsPadding: 0.05,
+                            // initialZoom: 0.5,
+                            onTouch: (event: TouchEvent) => {},
                         });
 
                         this.init();
@@ -246,7 +251,9 @@
         private init() {
             this.svg.querySelectorAll('[id^="shp-"]').forEach((shape) => {
                 let iso = shape.id.substring(4);
-                let cityDot: SVGGraphicsElement = this.svg.querySelector("#dot-" + iso);
+                let cityDot: SVGGraphicsElement = this.svg.querySelector(
+                    "#dot-" + iso
+                );
                 let cityName: SVGGraphicsElement = this.svg.querySelector(
                     "#cty-" + iso
                 );
@@ -268,7 +275,7 @@
 
             // Observe style attribute the compute clientWidth at the right time.
             const observer = new MutationObserver((mutationList, observer) => {
-                if (mutationList[0].attributeName !== 'style') {
+                if (mutationList[0].attributeName !== "style") {
                     return;
                 }
 
@@ -285,7 +292,6 @@
                     let item = this.items[iso];
                     let shape = item.shape;
 
-                    console.log("small country : ", iso);
                     let g = document.createElementNS(
                         "http://www.w3.org/2000/svg",
                         "g"
@@ -312,7 +318,7 @@
                     g.appendChild(circle);
 
                     shape = g;
-                })
+                });
 
                 this.inited = true;
             });
@@ -320,19 +326,21 @@
                 childList: false,
                 attributes: true,
                 subtree: false,
-            }
+            };
             observer.observe(this.$el, observerOptions);
 
             console.log("Map loaded and initialized");
             this.$emit("loaded");
         }
 
-        private clickHandler(event: MouseEvent) {
+        private clickHandler(event: MouseEvent | TouchEvent) {
+            console.log("Map event:", event);
             let target = <Element>event.target;
 
             if (this.inhibitClick) {
                 this.inhibitClick = false;
 
+                console.log("Event stopped");
                 return;
             }
 
@@ -342,15 +350,12 @@
             ) {
                 target = target.parentElement;
             } else if ("path" !== target.nodeName) {
-                console.info(target.nodeName);
+                // console.info(target.nodeName);
 
                 return;
             }
 
             let iso: string = target.id.substring(4);
-
-            console.log(event);
-
             this.$emit("country-select", iso);
         }
 

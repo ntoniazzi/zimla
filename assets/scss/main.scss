@@ -50,17 +50,16 @@ main {
 }
 
 button {
-	font-family: Future Earth;
-	appearance: none;
-	background: none;
-	border: 2px outset gray;
-	border-radius: 6px;
-	padding: 0.25em 2em;
+    font-family: Future Earth;
+    appearance: none;
+    background: none;
+    border: 2px outset gray;
+    border-radius: 6px;
+    padding: 0.25em 2em;
 
     cursor: url(../svg/cursor-hand.svg) 2 2, pointer;
 
     .label {
-
     }
 
     .icon {
@@ -68,7 +67,8 @@ button {
     }
 }
 
-input, label {
+input,
+label {
     cursor: url(../svg/cursor-hand.svg) 2 2, pointer;
 }
 
@@ -78,7 +78,7 @@ header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;   
+    align-items: center;
     height: 4rem;
 }
 
@@ -88,7 +88,7 @@ input[type="checkbox"] {
     height: 1em;
     background-image: url(../svg/dot-red.svg);
     background-repeat: no-repeat;
-    background-position:  50% 50%;
+    background-position: 50% 50%;
     background-size: contain;
 
     &:checked {
@@ -102,7 +102,7 @@ input[type="radio"] {
     height: 1em;
     background-image: url(../svg/dot-white.svg);
     background-repeat: no-repeat;
-    background-position:  50% 50%;
+    background-position: 50% 50%;
     background-size: contain;
 
     &:checked {
@@ -120,8 +120,8 @@ fieldset {
 }
 
 .music {
-	font-size: 0.7rem;
-	text-shadow: none;
+    font-size: 0.7rem;
+    text-shadow: none;
     padding: 1rem;
 
     div {
@@ -131,7 +131,7 @@ fieldset {
         gap: 0.5em;
 
         & :nth-child(1) {
-          flex-grow: 1;  
+            flex-grow: 1;
         }
 
         & :nth-child(2) {
@@ -150,7 +150,7 @@ fieldset {
 }
 
 .cards {
-	height: calc(100vh - 5rem);
+    height: calc(100vh - 5rem);
 }
 
 #screen-1 {
@@ -171,11 +171,11 @@ fieldset {
 
     #map-box {
         width: calc(100% - 20rem);
-    }
 
-    .panels > * {
-        margin-bottom: 1rem;
-        width: 19.5rem;
+        & + .metal-panel {
+            margin-bottom: 1rem;
+            width: 19.5rem;
+        }
     }
 }
 
@@ -331,7 +331,7 @@ dd {
 
     &::before {
         content: "";
-    
+
         height: 1.5em;
         width: 1.5em;
         background: url(../svg/dot-white.svg) no-repeat;
@@ -350,7 +350,8 @@ dd {
     }
 
     &.failure {
-        .label, .score {
+        .label,
+        .score {
             opacity: 0.5;
         }
 
@@ -473,13 +474,13 @@ svg#Europe {
 }
 
 header .player-menu {
-	font-size: 12pt;
-	z-index: 1;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	height: 100%;
-	gap: 2rem;
+    font-size: 12pt;
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    gap: 2rem;
 
     img {
         max-height: 100%;
@@ -520,10 +521,10 @@ header .player-menu {
 }
 
 #screen-play .counter-container {
-	display: block;
-	font-family: Future Earth;
-	line-height: 3em;
-	text-align: center;
+    display: block;
+    font-family: Future Earth;
+    line-height: 3em;
+    text-align: center;
 }
 
 .small-only {
@@ -531,13 +532,13 @@ header .player-menu {
 }
 
 .modal-background {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	z-index: 1000;
-	background: #327db3;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: #327db3;
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -578,7 +579,6 @@ header .player-menu {
 
     .well.has-input {
         margin-bottom: 1rem;
-        
     }
 
     button {
@@ -619,17 +619,20 @@ header .player-menu {
 
         #map-box {
             order: 2;
-            width:100%;
+            width: 100%;
+
+            & + .metal-panel {
+                width: 100%;
+                margin: 0;
+            }
         }
 
         & > div:nth-child(2) {
             order: 1;
-            width:100%;
         }
 
         & > div:nth-child(3) {
             order: 3;
-            width:100%;
         }
 
         .counter-container {
@@ -643,14 +646,25 @@ header .player-menu {
             }
         }
 
-
-
         .game {
             font-size: 0.6rem;
             margin: 0;
         }
-
     }
 
+    .flag {
+        position: absolute;
+        right: 1rem;
+        width: 4rem;
+        img {
+            max-width: 100%;
+            margin: 0;
+        }
+    }
 
+    #info {
+        dl {
+            margin: 0;
+        }
+    }
 }

@@ -8,7 +8,7 @@ export interface CountryData {
     population: number;
     density: number;
     water: number;
-};
+}
 
 export interface CountryShape {
     iso: string;
@@ -19,13 +19,13 @@ export interface CountryShape {
     dot: SVGGraphicsElement;
     capital: string;
     // color: string;
-};
+}
 
 export interface MapData {
     name: string;
     smallCountries: Array<string>;
     map: string;
-};
+}
 
 export interface Player {
     name: string;

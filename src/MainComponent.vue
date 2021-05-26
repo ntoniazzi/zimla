@@ -1,7 +1,10 @@
 <template>
     <main>
         <header class="metal-panel">
-            <button v-if="state !== 0" v-on:click="state = 0, currentPlayer = null">
+            <button
+                v-if="state !== 0"
+                v-on:click="(state = 0), (currentPlayer = null)"
+            >
                 <div class="label">Retour</div>
                 <div class="icon">👈</div>
             </button>
@@ -15,10 +18,7 @@
                 <div class="icon">🔧</div>
             </button>
 
-            <div
-                class="player-menu"
-                v-if="currentPlayer !== null"
-            >
+            <div class="player-menu" v-if="currentPlayer !== null">
                 <div class="name">{{ currentPlayer.name }}</div>
                 <img
                     v-bind:src="`https://robohash.org/${currentPlayer.name}/set_set3`"
@@ -32,13 +32,25 @@
                     <div class="label">Nouveau joueur</div>
 
                     <div class="well has-input">
-                        <input v-model="playerName" autofocus v-on:keyup.enter="createPlayer" />
+                        <input
+                            v-model="playerName"
+                            autofocus
+                            v-on:keyup.enter="createPlayer"
+                        />
                     </div>
 
-                    <button v-on:click="createPlayer" v-bind:disabled="playerName.length === 0">Créer</button>
+                    <button
+                        v-on:click="createPlayer"
+                        v-bind:disabled="playerName.length === 0"
+                    >
+                        Créer
+                    </button>
                 </div>
 
-                <players-list v-bind:players="players" v-on:selected="selectPlayer"></players-list>
+                <players-list
+                    v-bind:players="players"
+                    v-on:selected="selectPlayer"
+                ></players-list>
             </div>
 
             <div class="card" v-if="state === 2" id="screen-options">
@@ -55,39 +67,22 @@
                     <fieldset>
                         <legend>Questions</legend>
                         <label>
-                            <input
-                                type="radio"
-                                v-model="num"
-                                value="10"
-                            />
+                            <input type="radio" v-model="num" value="10" />
                             10 questions
                         </label>
                         <label>
-                            <input
-                                type="radio"
-                                v-model="num"
-                                value="20"
-                            />
+                            <input type="radio" v-model="num" value="20" />
                             20 questions
                         </label>
                         <label>
-                            <input
-                                type="radio"
-                                v-model="num"
-                                value="30"
-                            />
+                            <input type="radio" v-model="num" value="30" />
                             30 questions
                         </label>
                         <label>
-                            <input
-                                type="radio"
-                                v-model="num"
-                                value="0"
-                            />
+                            <input type="radio" v-model="num" value="0" />
                             Défi
                         </label>
                     </fieldset>
-
 
                     <fieldset>
                         <legend>Jeu</legend>
@@ -97,7 +92,11 @@
                             Pays
                         </label>
                         <label>
-                            <input type="radio" v-model="mode" value="capitale" />
+                            <input
+                                type="radio"
+                                v-model="mode"
+                                value="capitale"
+                            />
                             Capitales
                         </label>
                         <label>
@@ -115,7 +114,11 @@
                 </div>
             </div>
 
-            <div class="card" id="screen-play" v-show="state === 1 || state === 3">
+            <div
+                class="card"
+                id="screen-play"
+                v-show="state === 1 || state === 3"
+            >
                 <map-component
                     v-show="state === 1 || state === 3"
                     ref="map"
@@ -125,77 +128,73 @@
                 ></map-component>
 
                 <!-- <div class="panels"> -->
-                    <div
-                        class="metal-panel green corner"
-                        v-if="state === 1"
-                    >
-                        <div class="label">Informations</div>
+                <div class="metal-panel green corner" v-if="state === 1">
+                    <div class="label">Informations</div>
 
-                        <country-info
-                            v-bind:country="selectedCountry"
-                        ></country-info>
-                    </div>
+                    <country-info
+                        v-bind:country="selectedCountry"
+                    ></country-info>
+                </div>
 
-                    <div
-                        class="metal-panel blue corner"
-                        v-if="
-                            'info' !== mode && null !== current && state === 3
-                        "
-                    >
-                        <div class="label">Question</div>
-                        <div>
-                            <span v-if="mode === 'name'">
-                                Où se trouve ce pays
-                            </span>
-                            <span v-else-if="mode === 'capitale'">
-                                Où se trouve cette capitale?
-                            </span>
-                            <span v-else-if="mode === 'flag'">
-                                À quel pays appartient ce drapeau?
-                            </span>
-                            <div class="question">
-                                <template v-if="mode === 'name'">
-                                    {{ countries[gameIsoList[current]].name }}
-                                </template>
-                                <template v-else-if="mode === 'capitale'">
-                                    {{
-                                        countries[gameIsoList[current]].capital
-                                    }}
-                                </template>
-                                <template v-else-if="mode === 'flag'">
-                                    <img
-                                        v-bind:src="'/build/flags/' + countries[gameIsoList[current]].flagUrl.split('/').pop()"
-                                        style="max-width:16rem"
-                                    />
-                                </template>
-                            </div>
+                <div
+                    class="metal-panel blue corner"
+                    v-if="'info' !== mode && null !== current && state === 3"
+                >
+                    <div class="label">Question</div>
+                    <div>
+                        <span v-if="mode === 'name'">
+                            Où se trouve ce pays
+                        </span>
+                        <span v-else-if="mode === 'capitale'">
+                            Où se trouve cette capitale?
+                        </span>
+                        <span v-else-if="mode === 'flag'">
+                            À quel pays appartient ce drapeau?
+                        </span>
+                        <div class="question">
+                            <template v-if="mode === 'name'">
+                                {{ countries[gameIsoList[current]].name }}
+                            </template>
+                            <template v-else-if="mode === 'capitale'">
+                                {{ countries[gameIsoList[current]].capital }}
+                            </template>
+                            <template v-else-if="mode === 'flag'">
+                                <img
+                                    v-bind:src="
+                                        '/build/flags/' +
+                                        countries[gameIsoList[current]].flagUrl
+                                            .split('/')
+                                            .pop()
+                                    "
+                                    style="max-width: 16rem"
+                                />
+                            </template>
                         </div>
                     </div>
+                </div>
 
-                    <div
-                        class="metal-panel yellow corner"
-                        v-if="mode !== 'info' && state === 3"
-                    >
-                        <div class="label">Résultats</div>
-                        <vue-counter
-                            class="top-right-counter"
-                            v-bind:value="currentScore"
-                            v-bind:duration="1000"
-                        ></vue-counter>
-                        <div v-if="max">
-                            <span
-                                class="game"
-                                v-for="(i, k) in max"
-                                v-bind:key="k"
-                                v-bind:class="{
-                                    failure:
-                                        answers[k] && answers[k].points === 0,
-                                    success:
-                                        answers[k] && answers[k].points > 0,
-                                }"
-                            ></span>
-                        </div>
+                <div
+                    class="metal-panel yellow corner"
+                    v-if="mode !== 'info' && state === 3"
+                >
+                    <div class="label">Résultats</div>
+                    <vue-counter
+                        class="top-right-counter"
+                        v-bind:value="currentScore"
+                        v-bind:duration="1000"
+                    ></vue-counter>
+                    <div v-if="max">
+                        <span
+                            class="game"
+                            v-for="(i, k) in max"
+                            v-bind:key="k"
+                            v-bind:class="{
+                                failure: answers[k] && answers[k].points === 0,
+                                success: answers[k] && answers[k].points > 0,
+                            }"
+                        ></span>
                     </div>
+                </div>
                 <!-- </div> -->
             </div>
 
@@ -245,11 +244,17 @@
     import RISL from "./RISL";
     import { Dictionary } from "./Dictionary";
     import CountryInfoComponent from "./CountryInfoComponent.vue";
-    import { Answer, CountryData, MapData, Player, WikiCountry } from './interfaces';
+    import {
+        Answer,
+        CountryData,
+        MapData,
+        Player,
+        WikiCountry,
+    } from "./interfaces";
     import CounterComponent from "./CounterComponent.vue";
-    import SoundComponent from './SoundComponent.vue';
+    import SoundComponent from "./SoundComponent.vue";
     import PlayersListComponent from "./PlayersListComponent.vue";
-    import { genId, shuffleArray } from './utils';
+    import { genId, shuffleArray } from "./utils";
 
     enum Mode {
         INFO = "info",
@@ -375,7 +380,7 @@
         }
 
         private mounted() {
-            this.sound = <SoundComponent> this.$refs['sound'];
+            this.sound = <SoundComponent>this.$refs["sound"];
         }
 
         private discover() {
@@ -522,7 +527,6 @@
 
             if (country.iso !== isoAnswer) {
                 // wrong answer
-
 
                 this.answers.push(myAnswer);
 
