@@ -2,7 +2,7 @@ export interface CountryData {
     name: string;
     iso: string;
     capital: string;
-    flagUnicode: string;
+    // flagUnicode: string;
     flagUrl: string;
     area: number;
     population: number;
@@ -13,10 +13,10 @@ export interface CountryData {
 export interface CountryShape {
     iso: string;
     name: string;
-    nameShape: SVGElement[];
-    shape: SVGElement;
-    capitalShape: SVGElement;
-    dot: SVGElement;
+    nameShape: SVGGraphicsElement[];
+    shape: SVGGraphicsElement;
+    capitalShape: SVGGraphicsElement;
+    dot: SVGGraphicsElement;
     capital: string;
     // color: string;
 };

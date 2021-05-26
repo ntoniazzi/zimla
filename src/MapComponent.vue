@@ -2,11 +2,13 @@
     <div id="map-box" class="metal-panel red corner">
         <div class="label">Carte</div>
         <div style="height: 100%">
+            <!--
             <div id="zoom">
                 <button v-on:click="zoomOut()">Zoom -</button>
                 <button v-on:click="zoomReset()">100%</button>
                 <button v-on:click="zoomIn()">Zoom +</button>
             </div>
+            -->
             <div
                 id="map"
                 ref="map"
@@ -25,6 +27,7 @@
     import { Prop, Watch } from "vue-property-decorator";
     import { Dictionary } from "./Dictionary";
     import { CountryShape, MapData } from "./interfaces";
+    const panzoom = require('panzoom');
 
     const blackList: Array<string> = ["az", "iq", "sa", "ir", "kz"];
 
@@ -44,18 +47,16 @@
         private dragged = false;
         private inited = false;
 
+        private inhibitClick = false;
+
         created() {
             console.log("map component created");
             this.onMapChange(this.mapData);
         }
 
-        mounted() {
-            console.log("map component mounted");
-        }
-
         @Watch("mapData")
         private onMapChange(newMap: MapData) {
-            console.log("onMapChange");
+            console.log("Map Changed");
             if (null == newMap) {
                 return;
             }
@@ -70,7 +71,11 @@
                     this.$nextTick(() => {
                         this.container = <HTMLDivElement>this.$refs["map"];
                         this.svg = <SVGElement>this.container.firstElementChild;
-                        this.svg.removeAttribute("height");
+
+                        let pan = panzoom(<SVGElement> this.svg);
+                        pan.on('panstart', () => {
+                            this.inhibitClick = true;
+                        });
 
                         this.init();
                     });
@@ -220,9 +225,11 @@
         }
 
         public getCountries(): Array<string> {
-            return Object.keys(this.items).filter(
-                (iso) => 0 > blackList.indexOf(iso)
-            );
+            // return Object.keys(this.items).filter(
+            //     (iso) => 0 > blackList.indexOf(iso)
+            // );
+
+            return Object.keys(this.items);
         }
 
         public reset() {
@@ -239,8 +246,8 @@
         private init() {
             this.svg.querySelectorAll('[id^="shp-"]').forEach((shape) => {
                 let iso = shape.id.substring(4);
-                let cityDot: SVGElement = this.svg.querySelector("#dot-" + iso);
-                let cityName: SVGElement = this.svg.querySelector(
+                let cityDot: SVGGraphicsElement = this.svg.querySelector("#dot-" + iso);
+                let cityName: SVGGraphicsElement = this.svg.querySelector(
                     "#cty-" + iso
                 );
                 let countryName = [].slice.call(
@@ -252,35 +259,12 @@
                     name: countryName[0]?.textContent,
                     nameShape: countryName,
                     dot: cityDot,
-                    shape: <SVGElement>shape,
+                    shape: <SVGGraphicsElement>shape,
                     capitalShape: cityName,
                     capital: cityName?.textContent,
                     // color: landColors[colorIndex],
                 };
             });
-
-            this.container.addEventListener("mousedown", (event) => {
-                document.body.addEventListener("mousemove", this.dragHandler);
-                document.body.addEventListener("mouseup", this.mouseUpHandler);
-
-                this.dragOrigin = { x: event.clientX, y: event.clientY };
-                this.scrollOrigin = {
-                    left: this.container.scrollLeft,
-                    top: this.container.scrollTop,
-                };
-
-                this.dragged = false;
-            });
-
-            this.container.addEventListener(
-                "click",
-                (event) => {
-                    if (this.dragged) {
-                        event.stopPropagation();
-                    }
-                },
-                true
-            );
 
             // Observe style attribute the compute clientWidth at the right time.
             const observer = new MutationObserver((mutationList, observer) => {
@@ -343,27 +327,14 @@
             this.$emit("loaded");
         }
 
-        private mouseUpHandler() {
-            document.body.removeEventListener("mousemove", this.dragHandler);
-            document.body.removeEventListener("mouseup", this.mouseUpHandler);
-
-            this.dragged = false;
-        }
-
-        private dragHandler(event: MouseEvent) {
-            let offsetX = this.dragOrigin.x - event.clientX;
-            let offsetY = this.dragOrigin.y - event.clientY;
-
-            let scrollLeft = Math.max(0, this.scrollOrigin.left + offsetX);
-            let scrollTop = Math.max(0, this.scrollOrigin.top + offsetY);
-
-            this.container.scrollTo({ left: scrollLeft, top: scrollTop });
-
-            this.dragged = true;
-        }
-
         private clickHandler(event: MouseEvent) {
             let target = <Element>event.target;
+
+            if (this.inhibitClick) {
+                this.inhibitClick = false;
+
+                return;
+            }
 
             if (
                 "circle" === target.nodeName &&
@@ -377,6 +348,8 @@
             }
 
             let iso: string = target.id.substring(4);
+
+            console.log(event);
 
             this.$emit("country-select", iso);
         }

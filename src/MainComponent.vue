@@ -2,13 +2,18 @@
     <main>
         <header class="metal-panel">
             <button v-if="state !== 0" v-on:click="state = 0, currentPlayer = null">
-                &lt; Retour
+                <div class="label">Retour</div>
+                <div class="icon">👈</div>
             </button>
-            <button v-if="state === 0" v-on:click="state = 1">
-                Découverte
+            <button v-if="state === 0" v-on:click="discover">
+                <div class="label">Découverte</div>
+                <div class="icon">🌍</div>
             </button>
 
-            <sound-component ref="sound"></sound-component>
+            <button v-on:click="showOptions = true">
+                <div class="label">Options</div>
+                <div class="icon">🔧</div>
+            </button>
 
             <div
                 class="player-menu"
@@ -23,7 +28,7 @@
 
         <div class="cards">
             <div id="screen-1" class="card" v-if="state === 0">
-                <div class="metal-panel corner red">
+                <div class="metal-panel corner red new-player">
                     <div class="label">Nouveau joueur</div>
 
                     <div class="well has-input">
@@ -119,7 +124,7 @@
                     v-bind:mapData="currentMap"
                 ></map-component>
 
-                <div class="panels">
+                <!-- <div class="panels"> -->
                     <div
                         class="metal-panel green corner"
                         v-if="state === 1"
@@ -191,7 +196,7 @@
                             ></span>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
 
             <div class="card" v-if="state === 4" id="screen-score">
@@ -219,6 +224,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal-background" v-show="showOptions">
+            <div class="modal glass-panel" v-show="showOptions">
+                <sound-component ref="sound" class="music"></sound-component>
+
+                <button v-on:click="showOptions = false">Fermer</button>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -229,7 +242,6 @@
     import extraDataUrl from "!!file-loader!../data/extra.data";
     import mapsUrl from "!!file-loader!../maps/maps.data";
     import MapComponent from "./MapComponent.vue";
-    import { RNG } from "./rng";
     import RISL from "./RISL";
     import { Dictionary } from "./Dictionary";
     import CountryInfoComponent from "./CountryInfoComponent.vue";
@@ -237,6 +249,7 @@
     import CounterComponent from "./CounterComponent.vue";
     import SoundComponent from './SoundComponent.vue';
     import PlayersListComponent from "./PlayersListComponent.vue";
+    import { genId, shuffleArray } from './utils';
 
     enum Mode {
         INFO = "info",
@@ -292,6 +305,7 @@
         private players: Array<Player> = [];
 
         private sound: SoundComponent = null;
+        private showOptions = false;
 
         private created() {
             let players: Array<Player> = JSON.parse(
@@ -364,6 +378,11 @@
             this.sound = <SoundComponent> this.$refs['sound'];
         }
 
+        private discover() {
+            this.map.reset();
+            this.state = State.DISCOVER;
+        }
+
         private selectPlayer(player: Player) {
             this.currentPlayer = player;
             this.state = State.OPTIONS;
@@ -414,10 +433,10 @@
 
         public start(): void {
             this.state = State.PLAY;
-            this.gameId = this.genId();
+            this.gameId = genId();
 
             this.$nextTick(() => {
-                this.shuffleArray(this.gameIsoList, this.gameId);
+                shuffleArray(this.gameIsoList, this.gameId);
                 this.max =
                     this.num === 0
                         ? 0
@@ -435,30 +454,6 @@
             });
         }
 
-        private genId(): string {
-            const length = 6;
-            let out = "";
-
-            for (let i = 0; i < length; ++i) {
-                let c = ((Math.random() * 52) | 0) + 0x41; // A
-                if (c > 0x5a) {
-                    // between Z and a
-                    c += 5;
-                }
-                out += String.fromCharCode(c);
-            }
-
-            return out;
-        }
-
-        private shuffleArray(array: Array<any>, id: string) {
-            let rng = new RNG(id);
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(rng.random(i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-
         private onMapLoaded() {
             this.map = <MapComponent>this.$refs["map"];
             this.mapLoaded = true;
@@ -471,7 +466,7 @@
 
         private initCountries() {
             this.gameIsoList.forEach((iso) => {
-                let flag: string = RISL.getFlag(iso);
+                // let flag: string = RISL.getFlag(iso);
                 let data = this.countryData[iso];
                 this.countries[iso] = {
                     iso: iso,
@@ -484,7 +479,7 @@
                         data && data.superficie
                             ? data.population / data.superficie
                             : 0,
-                    flagUnicode: flag,
+                    // flagUnicode: flag,
                     flagUrl: data?.flag,
                 };
             });
@@ -501,7 +496,7 @@
 
             if (State.DISCOVER === this.state) {
                 this.selectedCountry = country;
-                this.map.center(country.iso);
+                // this.map.center(country.iso);
 
                 return;
             }
@@ -527,16 +522,19 @@
 
             if (country.iso !== isoAnswer) {
                 // wrong answer
-                this.sound.playWrong();
+
 
                 this.answers.push(myAnswer);
 
                 if (this.max === 0) {
                     // mode défi
+                    this.sound.playDie();
                     this.endGame();
 
                     return;
                 }
+
+                this.sound.playWrong();
 
                 // wrong guess (red)
                 this.map.change(country.iso, true, true, true, "#ffcccc");
@@ -544,7 +542,7 @@
                 // right country (orange)
                 this.map.change(isoAnswer, true, true, true, "#ffdea9");
 
-                this.map.center(isoAnswer);
+                // this.map.center(isoAnswer);
             } else {
                 this.sound.playRight();
                 // good guess (green)
@@ -568,7 +566,7 @@
                 this.answers.push(myAnswer);
 
                 this.map.change(country.iso, true, true, true, "#e8f2ad");
-                this.map.center(isoAnswer);
+                // this.map.center(isoAnswer);
 
                 if (this.max === 0) {
                     if (this.answers.length >= this.gameIsoList.length) {

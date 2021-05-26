@@ -1,5 +1,5 @@
 <template>
-    <div class="music">
+    <div>
         <div>
             <span>Musique</span>
             <input type="checkbox" v-model="options.music" />
@@ -32,7 +32,7 @@
     import { Howl, HowlOptions } from "howler";
     import Vue from "vue";
     import { Component, Watch } from "vue-property-decorator";
-    import soundConfig from ".webpack[javascript/auto]!=!../howler-loader.js!../assets/sound/output.json";
+    import soundConfig from ".webpack[javascript/auto]!=!../howler-loader.js!../assets/sounds/output.json";
 
 
     const STORAGE_KEY = 'sound-settings';
@@ -161,6 +161,14 @@
             }
 
             this.play('wrong');
+        }
+
+        public playDie() {
+            if (!this.options.sound) {
+                return;
+            }
+
+            this.play('die');
         }
 
         private play(sprite: string) {
