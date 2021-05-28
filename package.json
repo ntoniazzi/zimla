@@ -10,13 +10,13 @@
     "serve": "encore dev-server --host 0.0.0.0 --port 9090"
   },
   "dependencies": {
+    "@panzoom/panzoom": "^4.4.0",
     "@symfony/webpack-encore": "^1.1.2",
     "@types/howler": "^2.2.2",
     "css-loader": "^5.2.4",
     "file-loader": "^6.2.0",
     "howler": "^2.2.1",
     "json-loader": "^0.5.7",
-    "panzoom": "^9.4.2",
     "prettier": "^2.2.1",
     "rng-js": "^1.0.1",
     "sass": "^1.32.11",

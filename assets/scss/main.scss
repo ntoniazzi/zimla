@@ -563,6 +563,10 @@ header .player-menu {
 }
 
 @media only screen and (max-width: 768px) {
+    main {
+        gap: 0;
+    }
+
     .players .player {
         width: 100%;
         text-align: center;

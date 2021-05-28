@@ -1212,6 +1212,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@panzoom/panzoom@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "@panzoom/panzoom@npm:4.4.0"
+  checksum: b4f0a51cb5dd9d47339a89407cd7014cf8cc725a76ab16d7bcef2796cd4ac51bb25213ac069ca98fc48481537fd933cd0481c2dbb84bf5453b25cb924fd01e0b
+  languageName: node
+  linkType: hard
+
 "@symfony/webpack-encore@npm:^1.1.2":
   version: 1.1.2
   resolution: "@symfony/webpack-encore@npm:1.1.2"
@@ -1708,15 +1715,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"amator@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "amator@npm:1.1.0"
-  dependencies:
-    bezier-easing: ^2.0.3
-  checksum: 5954da4a29b833755abf8c000ac65004cf82041db1fdb1f9a2c28408e2a6048445121161991b261c9f17bfc4f22242092ebc47b9a6396aa9447415ab9c7ae414
-  languageName: node
-  linkType: hard
-
 "ansi-colors@npm:^4.1.1":
   version: 4.1.1
   resolution: "ansi-colors@npm:4.1.1"
@@ -1991,13 +1989,6 @@ __metadata:
   version: 0.6.1
   resolution: "batch@npm:0.6.1"
   checksum: 4ec2d961e6af6e944e164eb1b8c5885bc4c85846d110ce2d55156ab2903dd1593f3c4a7b71c2cff81464a2973e1b91cc1bf86239a9ba44435a319eeae3346a91
-  languageName: node
-  linkType: hard
-
-"bezier-easing@npm:^2.0.3":
-  version: 2.1.0
-  resolution: "bezier-easing@npm:2.1.0"
-  checksum: 6ee6bc647109e1dc86533eef31c673652cc97188590ff8ee2a4c0596d275d9e54383a3ea7c2b51500e9b2263718e252f296dbce050df3df888025eca4b453be8
   languageName: node
   linkType: hard
 
@@ -5102,13 +5093,6 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"ngraph.events@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "ngraph.events@npm:1.2.1"
-  checksum: f275549b3f61c377357b9368ab661299e854fe2835843a32b7ee0e01e00d7df89946cdf4365cf703c5e0073205e78db170e130a83355076caa0541a61d6cb947
-  languageName: node
-  linkType: hard
-
 "node-forge@npm:^0.10.0":
   version: 0.10.0
   resolution: "node-forge@npm:0.10.0"
@@ -5430,17 +5414,6 @@ fsevents@~2.3.1:
   version: 2.2.0
   resolution: "p-try@npm:2.2.0"
   checksum: 20983f3765466c1ab617ed153cb53b70ac5df828d854a3334d185e20b37f436e9096f12bc1b7fc96d8908dc927a3685172d3d89e755774f57b7103460c54dcc5
-  languageName: node
-  linkType: hard
-
-"panzoom@npm:^9.4.2":
-  version: 9.4.2
-  resolution: "panzoom@npm:9.4.2"
-  dependencies:
-    amator: ^1.1.0
-    ngraph.events: ^1.2.1
-    wheel: ^1.0.0
-  checksum: b5d1f6dcfeac396b057a0e2d17719ecf53e5cbf851d2b236f4db047adaf266eef95c05a637a888bed9c4fce0a1c705e7ecd5662f2752eb46dfe47c603aa5648b
   languageName: node
   linkType: hard
 
@@ -6439,6 +6412,7 @@ fsevents@~2.3.1:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@panzoom/panzoom": ^4.4.0
     "@symfony/webpack-encore": ^1.1.2
     "@types/howler": ^2.2.2
     audiosprite: ^0.7.2
@@ -6446,7 +6420,6 @@ fsevents@~2.3.1:
     file-loader: ^6.2.0
     howler: ^2.2.1
     json-loader: ^0.5.7
-    panzoom: ^9.4.2
     prettier: ^2.2.1
     rng-js: ^1.0.1
     sass: ^1.32.11
@@ -7742,13 +7715,6 @@ typescript@^4.2.4:
   version: 0.1.4
   resolution: "websocket-extensions@npm:0.1.4"
   checksum: bbafc0ffa1c6f54606aac88ce366c6a0d72c7827291f40c15a1c325f9f4abe7f7176ab844dd43eab4f07276d9e748dd241d671874c4a0df5cbb0fbed133908dc
-  languageName: node
-  linkType: hard
-
-"wheel@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "wheel@npm:1.0.0"
-  checksum: 2aa577552f1958855211794cf3615ac6ae7ae8a78761692a9c24dd5c63bbe32657b8db0c3d37cda17ae69bc58ee101f724f2944551f3003fc2de01cf4fbb4811
   languageName: node
   linkType: hard
 

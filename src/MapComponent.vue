@@ -2,20 +2,12 @@
     <div id="map-box" class="metal-panel red corner">
         <div class="label">Carte</div>
         <div style="height: 100%">
-            <!--
-            <div id="zoom">
-                <button v-on:click="zoomOut()">Zoom -</button>
-                <button v-on:click="zoomReset()">100%</button>
-                <button v-on:click="zoomIn()">Zoom +</button>
-            </div>
-            -->
             <div
                 id="map"
                 ref="map"
                 v-if="map"
                 v-html="map"
                 v-on:click="clickHandler"
-                v-bind:class="{ dragging: dragged }"
             ></div>
         </div>
     </div>
@@ -27,9 +19,7 @@
     import { Prop, Watch } from "vue-property-decorator";
     import { Dictionary } from "./Dictionary";
     import { CountryShape, MapData } from "./interfaces";
-    const panzoom = require("panzoom");
-
-    const blackList: Array<string> = ["az", "iq", "sa", "ir", "kz"];
+    import Panzoom, { PanzoomObject } from "@panzoom/panzoom";
 
     @Component
     export default class MapComponent extends Vue {
@@ -42,12 +32,12 @@
         private svg: SVGElement = null;
         private items: Dictionary<CountryShape> = {};
         private container: HTMLDivElement = null;
-        private dragOrigin = { x: 0, y: 0 };
-        private scrollOrigin = { left: 0, top: 0 };
-        private dragged = false;
+        // private dragOrigin = { x: 0, y: 0 };
+        // private scrollOrigin = { left: 0, top: 0 };
+        // private dragged = false;
         private inited = false;
-
-        private inhibitClick = false;
+        public pan: PanzoomObject = null;
+        private panned = false;
 
         created() {
             console.log("map component created");
@@ -72,16 +62,24 @@
                         this.container = <HTMLDivElement>this.$refs["map"];
                         this.svg = <SVGElement>this.container.firstElementChild;
 
-                        let pan = panzoom(<SVGElement>this.svg, {
-                            maxZoom: 2.4,
-                            minZoom: 0.4,
-                            smoothScroll: false,
-                            bounds: true,
-                            boundsPadding: 0.05,
-                            // initialZoom: 0.5,
-                            onTouch: (event: TouchEvent) => {},
+                        this.pan = Panzoom(<SVGElement>this.svg, {
+                            maxScale: 1.7,
+                            minScale: 0.4,
+                            canvas: true,
+                            // contain: 'outside',
+                            // animate: false,
                         });
+                        this.svg.parentElement.addEventListener(
+                            "wheel",
+                            this.pan.zoomWithWheel
+                        );
 
+                        this.svg.addEventListener("panzoomstart", () => {
+                            this.panned = false;
+                        });
+                        this.svg.addEventListener("panzoompan", () => {
+                            this.panned = true;
+                        });
                         this.init();
                     });
                 });
@@ -230,10 +228,6 @@
         }
 
         public getCountries(): Array<string> {
-            // return Object.keys(this.items).filter(
-            //     (iso) => 0 > blackList.indexOf(iso)
-            // );
-
             return Object.keys(this.items);
         }
 
@@ -289,6 +283,7 @@
 
                 // init small countries
                 this.mapData.smallCountries.forEach((iso) => {
+                    console.log("init small country ", iso);
                     let item = this.items[iso];
                     let shape = item.shape;
 
@@ -334,13 +329,10 @@
         }
 
         private clickHandler(event: MouseEvent | TouchEvent) {
-            console.log("Map event:", event);
+            console.log("Map event: %s, panned=%o", event.type, this.panned);
             let target = <Element>event.target;
 
-            if (this.inhibitClick) {
-                this.inhibitClick = false;
-
-                console.log("Event stopped");
+            if (this.panned) {
                 return;
             }
 
